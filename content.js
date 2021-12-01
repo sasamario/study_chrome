@@ -1,19 +1,21 @@
 $(function() {
-    var count = 0;
     $(".save").on("click", function() {
         chrome.storage.local.set({"text": $("#tweet_textarea").val()}, function(){});
     });
     $(".temp").on("click", function() {
         chrome.storage.local.get("text", function(result) {
             $("#tweet_textarea").val(result.text);
-            count = $("#tweet_textarea").val().length;
+            let string = $("#tweet_textarea").val();
+            let count = getStringCount(string);
             $(".count").text(count);
         });
     });
-    //TODO:現状だとひらがなも1文字換算だが、Twitterではバイト数で判断しているため要修正
-    //ちなみにTwitterでは、全角140文字上限らしい（半角なら280字）
+    
+    //URLは、一律文字数が23としてカウントされるとのこと（keyupが終わった後、再度文字数を再計算する必要がある？）
     $("#tweet_textarea").keyup(function() {
-        count = $("#tweet_textarea").val().length;
+        let string = $("#tweet_textarea").val();
+        let count = getStringCount(string);
+        
         $(".count").text(count);
     });
     //コピー機能　ただし、execCommandは非推奨らしいので別方法で実装した方がよいかも？
@@ -21,4 +23,16 @@ $(function() {
         $("#tweet_textarea").select();
         document.execCommand("copy");
     });
+
+    function getStringCount(string) {
+        let count = 0;
+        for (let i = 0; i < string.length; i++) {
+            if (string.charAt(i).match(/^[^\x01-\x7E\xA1-\xDF]+$/)) {
+                count += 2;
+            } else {
+                count ++;
+            }
+        }
+        return count;
+    }
 });
