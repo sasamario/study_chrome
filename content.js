@@ -8,6 +8,7 @@ $(function() {
             let string = $("#tweet_textarea").val();
             let count = getStringCount(string);
             $(".count").text(count);
+            checkUrl(string);
         });
     });
     
@@ -24,6 +25,7 @@ $(function() {
         document.execCommand("copy");
     });
 
+    //入力値のカウント数取得処理　全角2文字　半角1文字
     function getStringCount(string) {
         let count = 0;
         for (let i = 0; i < string.length; i++) {
@@ -34,5 +36,20 @@ $(function() {
             }
         }
         return count;
+    }
+
+    /**
+     * 文字列内にURL形式が含まれているかチェックし、その結果を返す
+     * @param {String} string 
+     * @return {Array|null} URL形式の文字列が含まれているかの結果 TODO:この書き方であっているのか要確認
+     */
+    function checkUrl(string) {
+        let regex = /(https):\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+/g;
+        let result = string.match(regex);
+
+        //debug
+        console.log(result);
+        console.log(result.length);
+        return result;
     }
 });
