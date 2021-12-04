@@ -20,6 +20,19 @@ $(function() {
         document.execCommand("copy");
     });
 
+    //途中内容の自動保存処理
+    $("#tweet_textarea").blur(function(){
+        chrome.storage.local.set({"restore": $("#tweet_textarea").val()}, function(){});
+    });
+
+    //復元処理
+    $(".restore").on("click", function(){
+        chrome.storage.local.get("restore", function(result) {
+            $("#tweet_textarea").val(result.restore);
+            reflectCount();
+        });
+    });
+
     //入力値のカウント数取得処理　全角2文字　半角1文字
     function getStringCount(string) {
         let count = 0;
@@ -87,8 +100,8 @@ $(function() {
         let formalCount = addjustCount(string, count);
         $(".count").text(formalCount);
 
+        //規定の文字数を超えている場合、カウント数を赤色に変更する
         if (formalCount > limitCount) {
-            //文字の色を赤にする
             $(".count").css("color", "red");
         } else {
             $(".count").css("color", "black");
