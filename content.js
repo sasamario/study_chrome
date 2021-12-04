@@ -5,21 +5,15 @@ $(function() {
     $(".temp").on("click", function() {
         chrome.storage.local.get("text", function(result) {
             $("#tweet_textarea").val(result.text);
-            let string = $("#tweet_textarea").val();
-            let count = getStringCount(string);
-            $(".count").text(count);
-            checkUrl(string);
+            reflectCount();
         });
     });
     
     //URLは、一律文字数が23としてカウントされるとのこと（keyupが終わった後、再度文字数を再計算する必要がある？）
     $("#tweet_textarea").keyup(function() {
-        let string = $("#tweet_textarea").val();
-        let count = getStringCount(string);
-        let formalCount = addjustCount(string, count);
-        
-        $(".count").text(formalCount);
+        reflectCount();
     });
+
     //コピー機能　ただし、execCommandは非推奨らしいので別方法で実装した方がよいかも？
     $(".copy").on("click", function() {
         $("#tweet_textarea").select();
@@ -51,11 +45,15 @@ $(function() {
         return result;
     }
 
+    /**
+     * カウント数の差分を求める処理（URLは一律23文字として扱うため）
+     * @param {Array} urlArray 
+     * @returns {Number} 差分のカウント数
+     */
     function getDifferenceCount(urlArray = []) {
         let urlDifferenceCount = 0;
         const twitterUrlLength = 23;
         urlArray.forEach(function(url){
-            //各URLの文字数の差分を求める URLの長さ - Twitterで規定の23文字 = 差分のカウント数　これを全体のカウントから引けば良い
             urlDifferenceCount += url.length - twitterUrlLength;
         });
         return urlDifferenceCount;
@@ -77,5 +75,23 @@ $(function() {
         let formalCount = count - urlDifferenceCount;
 
         return formalCount;
+    }
+
+    /**
+     * カウント数を反映させる処理
+     */
+    function reflectCount() {
+        const limitCount = 280;
+        let string = $("#tweet_textarea").val();
+        let count = getStringCount(string);
+        let formalCount = addjustCount(string, count);
+        $(".count").text(formalCount);
+
+        if (formalCount > limitCount) {
+            //文字の色を赤にする
+            $(".count").css("color", "red");
+        } else {
+            $(".count").css("color", "black");
+        }
     }
 });
