@@ -16,8 +16,9 @@ $(function() {
     $("#tweet_textarea").keyup(function() {
         let string = $("#tweet_textarea").val();
         let count = getStringCount(string);
+        let formalCount = addjustCount(string, count);
         
-        $(".count").text(count);
+        $(".count").text(formalCount);
     });
     //コピー機能　ただし、execCommandは非推奨らしいので別方法で実装した方がよいかも？
     $(".copy").on("click", function() {
@@ -41,15 +42,40 @@ $(function() {
     /**
      * 文字列内にURL形式が含まれているかチェックし、その結果を返す
      * @param {String} string 
-     * @return {Array|null} URL形式の文字列が含まれているかの結果 TODO:この書き方であっているのか要確認
+     * @returns {Array|null} URL形式の文字列が含まれているかの結果
      */
     function checkUrl(string) {
         let regex = /(https):\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+/g;
         let result = string.match(regex);
 
-        //debug
-        console.log(result);
-        console.log(result.length);
         return result;
+    }
+
+    function getDifferenceCount(urlArray = []) {
+        let urlDifferenceCount = 0;
+        const twitterUrlLength = 23;
+        urlArray.forEach(function(url){
+            //各URLの文字数の差分を求める URLの長さ - Twitterで規定の23文字 = 差分のカウント数　これを全体のカウントから引けば良い
+            urlDifferenceCount += url.length - twitterUrlLength;
+        });
+        return urlDifferenceCount;
+    }
+
+    /**
+     * カウント数を調整する処理（URLは一律23文字として扱うため）
+     * @param {String} string 
+     * @param {Number} count 
+     * @returns {Number} 調整後のカウント数
+     */
+    function addjustCount(string, count) {
+        let urlDifferenceCount = 0;
+        let checkResult = checkUrl(string);
+        //文字列にURL形式のものがある場合のみ差分のカウント数を求める
+        if (checkResult != null) {
+            urlDifferenceCount = getDifferenceCount(checkResult);
+        }
+        let formalCount = count - urlDifferenceCount;
+
+        return formalCount;
     }
 });
