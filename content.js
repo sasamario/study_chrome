@@ -104,7 +104,7 @@ $(function() {
         if (formalCount > limitCount) {
             $(".count").css("color", "red");
         } else {
-            $(".count").css("color", "black");
+            $(".count").css("color", "#fff");
         }
     }
 });

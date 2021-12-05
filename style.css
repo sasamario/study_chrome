@@ -1,0 +1,82 @@
+body {
+    background-color: #a39391;
+    height: 420px;
+    width: 270px;
+}
+
+.main {
+    width: 95%;
+    margin: 5px auto;
+}
+
+.header {
+    margin: 8px auto;
+}
+
+.battery {
+    width: 20px;
+    height: 10px;
+    margin: 0px 0px 0px auto;
+}
+
+.battery > img {
+    height: 100%;
+    width: 100%;
+}
+
+#tweet_textarea {
+    border-radius: 5%;
+    background-color: #ecd6c7;
+    padding: 7px;
+    border: none;
+    width: 95%;
+}
+
+.count-block {
+    text-align: right;
+    color: #fff;
+    margin: 8px auto;
+}
+
+.button-section-row {
+    display: flex;
+    justify-content: space-around;
+    margin: 8px auto;
+}
+
+.button-box {
+    width: 72px;
+    height: 90px;
+}
+
+.button-icon {
+    width: 100%;
+    height: 80%;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.button-icon:hover {
+    opacity: 0.8;
+}
+
+.button-icon > img {
+    height: 100%;
+    width: 100%;
+}
+
+.button-name {
+    height: 20%;
+    margin: 0;
+    text-align: center;
+    color: #fff;
+}
+
+.button-box:first-child {
+    margin: 0px 27px 0px 0px;
+}
+
+.button-box:last-child {
+    margin: 0 0 0 27px;
+}

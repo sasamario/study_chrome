@@ -3,15 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>test</title>
+    <link rel="stylesheet" href="style.css">
     <script src="jquery-3.6.0.min.js"></script>
     <script src="content.js"></script>
 </head>
 <body>
-    <textarea name="textarea" id="tweet_textarea" cols="30" rows="10" placeholder="メモはこちらに入力"></textarea>
-    <p><span class="count">0</span>/280文字</p>
-    <button type="button" class="save">保存</button>
-    <button type="button" class="temp">テンプレート</button>
-    <button type="button" class="copy">コピー</button>
-    <button type="button" class="restore">復元</button>
+  <div class="main">
+    <div class='header'>
+      <div class="battery">
+        <img src="img/battery_mark5.png" alt="バッテリー">
+      </div>
+    </div>
+    <div class="input-section">
+      <textarea name="textarea" id="tweet_textarea" cols="30" rows="10"></textarea>
+      <p class="count-block"><span class="count">0</span>/280文字</p>
+    </div>
+    <div class="button-section">
+      <div class="button-section-row">
+        <div class="button-box">
+          <button type="button" class="button-icon save"><img src="img/sample.png" alt="sample"></button>
+          <p class="button-name">save</p>
+        </div>
+        <div class="button-box">
+          <button type="button" class="button-icon temp"><img src="img/sample.png" alt="sample"></button>
+          <p class="button-name">template</p>
+        </div>
+        <div class="button-box">
+          <button type="button" class="button-icon copy"><img src="img/sample.png" alt="sample"></button>
+          <p class="button-name">copy</p>
+        </div>
+      </div>
+      <div class="button-section-row">
+        <div class="button-box">
+          <button type="button" class="button-icon restore"><img src="img/sample.png" alt="sample"></button>
+          <p class="button-name">restore</p>
+        </div>
+        <div class="button-box">
+          <button type="button" class="button-icon "><img src="img/sample.png" alt="sample"></button>
+          <p class="button-name">button</p>
+        </div>
+        <div class="button-box">
+          <button type="button" class="button-icon "><img src="img/sample.png" alt="sample"></button>
+          <p class="button-name">button</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
