@@ -33,6 +33,34 @@ $(function() {
         });
     });
 
+    let timeCount = 0;
+    let getCountFlg = false; //カウントアップ用フラグ
+     
+    //カウントアップ開始処理
+    $("#start").on("click", function(){
+        //まだ、カウントアップをスタートしていなければスタートする(カウントの重複を防ぐため)
+        if (!getCountFlg) {
+            countUp();
+            getCountFlg = true;
+        }
+        // chrome.runtime.sendMessage({text: "タイマー開始"}, function(response) {
+        //     console.log(response);
+        // });
+    });
+
+    //カウントアップ停止処理
+    $("#stop").on("click", function() {
+        getCountFlg = false;
+        //setIntervalのクリア
+        clearInterval(intervalId);
+    });
+
+    //カウントアップ値リセット処理
+    $("#reset").on("click", function() {
+        timeCount = 0;
+        $(".time").text("0分0秒");
+    });
+
     //入力値のカウント数取得処理　全角2文字　半角1文字
     function getStringCount(string) {
         let count = 0;
@@ -107,4 +135,23 @@ $(function() {
             $(".count").css("color", "#fff");
         }
     }
+
+    /**
+     * カウントアップ
+     */
+    function countUp() {
+        let min = 0;
+        let sec = 0;
+
+        //intervalIdはsetIntervalのid
+        intervalId = setInterval(function(){
+            timeCount++;
+            min = Math.floor(timeCount / 60);
+            sec = timeCount - min*60;
+            let timer = `${min}分${sec}秒`;
+
+            $(".time").text(timer);
+        }, 1000);
+    }
+    
 });
