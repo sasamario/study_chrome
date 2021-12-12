@@ -10,10 +10,10 @@
 <body>
   <div class="main">
     <div class='header'>
-      <p class="time">0分0秒</p>
-      <div class="battery">
+      <p class="time">00:00</p>
+      <!-- <div class="battery">
         <img src="img/battery_mark5.png" alt="バッテリー">
-      </div>
+      </div> -->
     </div>
     <div class="input-section">
       <textarea name="textarea" id="tweet_textarea" cols="30" rows="10"></textarea>
@@ -22,36 +22,31 @@
     <div class="button-section">
       <div class="button-section-row">
         <div class="button-box">
-          <button type="button" class="button-icon save"><img src="img/sample.png" alt="sample"></button>
-          <p class="button-name">save</p>
+          <button type="button" id="start" class="button-icon"><img src="img/sample.png" alt="sample"></button>
+          <p class="button-name">start</p>
         </div>
         <div class="button-box">
-          <button type="button" class="button-icon temp"><img src="img/sample.png" alt="sample"></button>
-          <p class="button-name">template</p>
+          <button type="button" id="stop" class="button-icon"><img src="img/sample.png" alt="sample"></button>
+          <p class="button-name">stop</p>
         </div>
         <div class="button-box">
-          <button type="button" class="button-icon copy"><img src="img/sample.png" alt="sample"></button>
-          <p class="button-name">copy</p>
+          <button type="button" id="reset" class="button-icon"><img src="img/sample.png" alt="sample"></button>
+          <p class="button-name">reset</p>
         </div>
       </div>
       <div class="button-section-row">
         <div class="button-box">
-          <button type="button" class="button-icon restore"><img src="img/sample.png" alt="sample"></button>
+          <button type="button" id="save" class="button-icon"><img src="img/sample.png" alt="sample"></button>
+          <p class="button-name">temp save</p>
+        </div>
+        <div class="button-box">
+          <button type="button" id="temp" class="button-icon"><img src="img/sample.png" alt="sample"></button>
+          <p class="button-name">template</p>
+        </div>
+        <div class="button-box">
+          <button type="button" id="restore" class="button-icon"><img src="img/sample.png" alt="sample"></button>
           <p class="button-name">restore</p>
         </div>
-        <div class="button-box">
-          <button type="button" class="button-icon "><img src="img/sample.png" alt="sample"></button>
-          <p class="button-name">button</p>
-        </div>
-        <div class="button-box">
-          <button type="button" class="button-icon "><img src="img/sample.png" alt="sample"></button>
-          <p class="button-name">button</p>
-        </div>
-      </div>
-      <div>
-        <button type="button" id="start">スタート</button>
-        <button type="button" id="stop">ストップ</button>
-        <button type="button" id="reset">タイマーリセット</button>
       </div>
     </div>
   </div>
