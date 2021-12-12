@@ -1,8 +1,8 @@
 $(function() {
-    $(".save").on("click", function() {
+    $("#save").on("click", function() {
         chrome.storage.local.set({"text": $("#tweet_textarea").val()}, function(){});
     });
-    $(".temp").on("click", function() {
+    $("#temp").on("click", function() {
         chrome.storage.local.get("text", function(result) {
             $("#tweet_textarea").val(result.text);
             reflectCount();
@@ -14,19 +14,19 @@ $(function() {
         reflectCount();
     });
 
-    //コピー機能　ただし、execCommandは非推奨らしいので別方法で実装した方がよいかも？
-    $(".copy").on("click", function() {
-        $("#tweet_textarea").select();
-        document.execCommand("copy");
-    });
+    // //コピー機能 ただし、execCommandは非推奨らしいので別方法で実装した方がよいかも？
+    // $("#copy").on("click", function() {
+    //     $("#tweet_textarea").select();
+    //     document.execCommand("copy");
+    // });
 
-    //途中内容の自動保存処理
+    // 途中内容の自動保存処理
     $("#tweet_textarea").blur(function(){
         chrome.storage.local.set({"restore": $("#tweet_textarea").val()}, function(){});
     });
 
     //復元処理
-    $(".restore").on("click", function(){
+    $("#restore").on("click", function(){
         chrome.storage.local.get("restore", function(result) {
             $("#tweet_textarea").val(result.restore);
             reflectCount();
@@ -35,7 +35,7 @@ $(function() {
 
     let timeCount = 0;
     let getCountFlg = false; //カウントアップ用フラグ
-     
+
     //カウントアップ開始処理
     $("#start").on("click", function(){
         //まだ、カウントアップをスタートしていなければスタートする(カウントの重複を防ぐため)
@@ -58,7 +58,7 @@ $(function() {
     //カウントアップ値リセット処理
     $("#reset").on("click", function() {
         timeCount = 0;
-        $(".time").text("0分0秒");
+        $(".time").text("00:00");
     });
 
     //入力値のカウント数取得処理　全角2文字　半角1文字
@@ -146,9 +146,12 @@ $(function() {
         //intervalIdはsetIntervalのid
         intervalId = setInterval(function(){
             timeCount++;
-            min = Math.floor(timeCount / 60);
-            sec = timeCount - min*60;
-            let timer = `${min}分${sec}秒`;
+            min = String(Math.floor(timeCount / 60));
+            sec = String(timeCount - min*60);
+            sec = sec.length == 1 ? `0${sec}` : sec;
+            min = min.length == 1 ? `0${min}` : min;
+            
+            let timer = `${min}:${sec}`;
 
             $(".time").text(timer);
         }, 1000);
