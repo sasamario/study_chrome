@@ -34,14 +34,14 @@ $(function() {
     });
 
     let timeCount = 0;
-    let getCountFlg = false; //カウントアップ用フラグ
+    let timeCountFlg = false; //カウントアップ用フラグ
 
     //カウントアップ開始処理
     $("#start").on("click", function(){
         //まだ、カウントアップをスタートしていなければスタートする(カウントの重複を防ぐため)
-        if (!getCountFlg) {
-            countUp();
-            getCountFlg = true;
+        if (!timeCountFlg) {
+            timeCountUp();
+            timeCountFlg = true;
         }
         // chrome.runtime.sendMessage({text: "タイマー開始"}, function(response) {
         //     console.log(response);
@@ -50,7 +50,7 @@ $(function() {
 
     //カウントアップ停止処理
     $("#stop").on("click", function() {
-        getCountFlg = false;
+        timeCountFlg = false;
         //setIntervalのクリア
         clearInterval(intervalId);
     });
@@ -139,7 +139,7 @@ $(function() {
     /**
      * カウントアップ
      */
-    function countUp() {
+    function timeCountUp() {
         let min = 0;
         let sec = 0;
 
