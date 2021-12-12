@@ -1,6 +1,6 @@
 body {
     background-color: #a39391;
-    height: 420px;
+    /* height: 420px; */
     width: 270px;
 }
 
@@ -10,14 +10,21 @@ body {
 }
 
 .header {
-    margin: 8px auto;
+    margin: 4px auto;
 }
 
-.battery {
+.time {
+    margin: 0px 0px;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+}
+
+/* .battery {
     width: 20px;
     height: 10px;
     margin: 0px 0px 0px auto;
-}
+} */
 
 .battery > img {
     height: 100%;
