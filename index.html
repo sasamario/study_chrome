@@ -8,12 +8,9 @@
     <script src="content.js"></script>
 </head>
 <body>
-  <div class="main">
+  <div class="main" id="test">
     <div class='header'>
-      <p class="time">00:00</p>
-      <!-- <div class="battery">
-        <img src="img/battery_mark5.png" alt="バッテリー">
-      </div> -->
+      <p class="time" id = "time">00:00</p>
     </div>
     <div class="input-section">
       <textarea name="textarea" id="tweet_textarea" cols="30" rows="10"></textarea>
@@ -22,29 +19,29 @@
     <div class="button-section">
       <div class="button-section-row">
         <div class="button-box">
-          <button type="button" id="start" class="button-icon"><img src="img/sample.png" alt="sample"></button>
+          <button type="button" id="start" class="button-icon"><img src="img/start.png" alt="sample"></button>
           <p class="button-name">start</p>
         </div>
         <div class="button-box">
-          <button type="button" id="stop" class="button-icon"><img src="img/sample.png" alt="sample"></button>
+          <button type="button" id="stop" class="button-icon"><img src="img/stop.png" alt="sample"></button>
           <p class="button-name">stop</p>
         </div>
         <div class="button-box">
-          <button type="button" id="reset" class="button-icon"><img src="img/sample.png" alt="sample"></button>
+          <button type="button" id="reset" class="button-icon"><img src="img/reset.png" alt="sample"></button>
           <p class="button-name">reset</p>
         </div>
       </div>
       <div class="button-section-row">
         <div class="button-box">
-          <button type="button" id="save" class="button-icon"><img src="img/sample.png" alt="sample"></button>
+          <button type="button" id="temp" class="button-icon"><img src="img/temp.png" alt="sample"></button>
+          <p class="button-name">temp paste</p>
+        </div>
+        <div class="button-box">
+          <button type="button" id="save" class="button-icon"><img src="img/temp_save.png" alt="sample"></button>
           <p class="button-name">temp save</p>
         </div>
         <div class="button-box">
-          <button type="button" id="temp" class="button-icon"><img src="img/sample.png" alt="sample"></button>
-          <p class="button-name">template</p>
-        </div>
-        <div class="button-box">
-          <button type="button" id="restore" class="button-icon"><img src="img/sample.png" alt="sample"></button>
+          <button type="button" id="restore" class="button-icon"><img src="img/restore.png" alt="sample"></button>
           <p class="button-name">restore</p>
         </div>
       </div>

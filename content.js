@@ -1,11 +1,28 @@
 $(function() {
+    let background = chrome.extension.getBackgroundPage();
+    let intervalId = "";
+    let bgTimeCount = 0;
+
+    //拡張機能起動時のカウントチェック
+    chrome.runtime.sendMessage({text: "check"}, function(response) {
+        if (response.text == "done") {
+            //裏側で動いている場合は、表示部分に反映させる
+            reflectTimeCount();
+            intervalId = setInterval(function(){
+                reflectTimeCount();
+            }, 1000);
+        } else {
+            reflectTimeCount();
+        }
+    });
+
     $("#save").on("click", function() {
         chrome.storage.local.set({"text": $("#tweet_textarea").val()}, function(){});
     });
     $("#temp").on("click", function() {
         chrome.storage.local.get("text", function(result) {
             $("#tweet_textarea").val(result.text);
-            reflectCount();
+            reflectTimeCount();
         });
     });
     
@@ -13,12 +30,6 @@ $(function() {
     $("#tweet_textarea").keyup(function() {
         reflectCount();
     });
-
-    // //コピー機能 ただし、execCommandは非推奨らしいので別方法で実装した方がよいかも？
-    // $("#copy").on("click", function() {
-    //     $("#tweet_textarea").select();
-    //     document.execCommand("copy");
-    // });
 
     // 途中内容の自動保存処理
     $("#tweet_textarea").blur(function(){
@@ -33,31 +44,27 @@ $(function() {
         });
     });
 
-    let timeCount = 0;
-    let timeCountFlg = false; //カウントアップ用フラグ
-
     //カウントアップ開始処理
     $("#start").on("click", function(){
-        //まだ、カウントアップをスタートしていなければスタートする(カウントの重複を防ぐため)
-        if (!timeCountFlg) {
-            timeCountUp();
-            timeCountFlg = true;
-        }
-        // chrome.runtime.sendMessage({text: "タイマー開始"}, function(response) {
-        //     console.log(response);
-        // });
+        chrome.runtime.sendMessage({text: "start"}, function(response) {
+            //カウント反映処理を重複させないように、スタート時のみ以下の反映処理を実行する
+            if (response.text == "start") {
+                intervalId = setInterval(function(){
+                    reflectTimeCount();
+                }, 1000);
+            }
+        });
     });
 
     //カウントアップ停止処理
     $("#stop").on("click", function() {
-        timeCountFlg = false;
-        //setIntervalのクリア
         clearInterval(intervalId);
+        chrome.runtime.sendMessage({text: "stop"}, function() {});
     });
 
     //カウントアップ値リセット処理
     $("#reset").on("click", function() {
-        timeCount = 0;
+        chrome.runtime.sendMessage({text: "reset"}, function() {});
         $(".time").text("00:00");
     });
 
@@ -136,25 +143,33 @@ $(function() {
         }
     }
 
+    
+
     /**
      * カウントアップ
      */
-    function timeCountUp() {
+    function reflectTimeCount() {
         let min = 0;
         let sec = 0;
+        let limit = 60 * 60 * 5;
 
-        //intervalIdはsetIntervalのid
-        intervalId = setInterval(function(){
-            timeCount++;
-            min = String(Math.floor(timeCount / 60));
-            sec = String(timeCount - min*60);
-            sec = sec.length == 1 ? `0${sec}` : sec;
-            min = min.length == 1 ? `0${min}` : min;
-            
-            let timer = `${min}:${sec}`;
+        bgTimeCount = background.timeCount;
 
-            $(".time").text(timer);
-        }, 1000);
+        if (bgTimeCount >= limit) {
+            //自動停止
+            chrome.runtime.sendMessage({text: "stop"}, function() {});
+            clearInterval(intervalId);
+            alert("5時間経過したため、自動停止しました");
+        }
+
+        min = String(Math.floor(bgTimeCount / 60));
+        sec = String(bgTimeCount - min*60);
+        sec = sec.length == 1 ? `0${sec}` : sec;
+        min = min.length == 1 ? `0${min}` : min;
+        
+        let timer = `${min}:${sec}`;
+
+        $(".time").text(timer);
     }
     
 });

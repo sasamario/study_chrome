@@ -4,6 +4,10 @@ body {
     width: 270px;
 }
 
+img {
+    object-fit: contain;
+}
+
 .main {
     width: 95%;
     margin: 5px auto;
@@ -62,6 +66,7 @@ body {
     border-radius: 10px;
     border: none;
     cursor: pointer;
+    background-color: #E6E6E6;
 }
 
 .button-icon:hover {
